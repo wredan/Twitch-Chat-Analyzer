@@ -1,0 +1,9 @@
+#Set twitch properties to configure PircBotX Client
+#Your twitch.tv username
+channel.username=
+#Your oauth password from http://twitchapps.com/tmi
+oauth=oauth:
+#Some twitch channel=#channelname
+channel=#
+#kafka topic name
+kafka.topic=twitch
