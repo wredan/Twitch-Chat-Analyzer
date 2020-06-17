@@ -1,3 +1,4 @@
 **/.settings/
 **/target/
 chat-channel.properties
+Main.java
