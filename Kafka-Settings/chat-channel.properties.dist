@@ -1,9 +1,17 @@
 #Set twitch properties to configure PircBotX Client
-#Your twitch.tv username
-channel.username=
-#Your oauth password from http://twitchapps.com/tmi
-oauth=oauth:
-#Some twitch channel=#channelname
-channel=#
+
+#Application name. This must be unique across all Kafka connectors used by the customer.
+name=twitch_chat_message
+#Source connector class
+connector.class=kafkaconnector.ChatMessageSourceConnector
+#max tasks
+tasks.max=1
 #kafka topic name
-kafka.topic=twitch
+topic=twitch
+#Your twitch.tv username
+channel.username=testaccount
+#Your oauth password from http://twitchapps.com/tmi
+oauth=oauth:YOUR_KEY
+#Some twitch channel
+channel=#CHANNEL_NAME
+

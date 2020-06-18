@@ -18,12 +18,21 @@ public class MessageQueue {
 		return instance;
 	}
 	
-	public void add(String s) {
-		queue.add(s);
+	public void put(String message) {
+		try {
+			queue.put(message);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public String take() throws InterruptedException {
-		return queue.take();
+	public String take() {
+		try {
+			return queue.take();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public boolean isEmpty() {

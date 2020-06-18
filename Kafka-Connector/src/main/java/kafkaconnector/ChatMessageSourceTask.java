@@ -13,7 +13,7 @@ import chatmessage.MessageQueue;
 
 public class ChatMessageSourceTask extends SourceTask{
 
-	private final String OFFSET_KEY = "twitch";
+	private final String OFFSET_KEY = "twitchMessage";
 	private final String OFFSET_VALUE = "position";
 	private String kafkaTopic;
 	private MessageQueue queue;
@@ -38,7 +38,7 @@ public class ChatMessageSourceTask extends SourceTask{
 			SourceRecord record = new SourceRecord(offsetKey(OFFSET_KEY), offsetValue(count++), kafkaTopic,
 					Schema.STRING_SCHEMA, data);
 			records.add(record);
-		}
+		}		
 		return records;
 	}
 	

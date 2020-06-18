@@ -10,10 +10,10 @@ public class ChatMessageListener extends ListenerAdapter  {
 	public void onGenericMessage(GenericMessageEvent event) throws Exception {
 		super.onGenericMessage(event);
 		
-		MessageQueue.getInstance().add(parseToJSON(event));
+		MessageQueue.getInstance().put(parseToJSONString(event));
 	}
 	
-	private String parseToJSON(GenericMessageEvent event) {
+	private String parseToJSONString(GenericMessageEvent event) {
 		 Gson gson = new Gson();
 		 String json = gson.toJson(new UserMessage(
 				 event.getUser().getIdent().toString(),

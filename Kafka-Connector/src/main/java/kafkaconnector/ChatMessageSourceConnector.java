@@ -29,7 +29,7 @@ public class ChatMessageSourceConnector extends SourceConnector{
 	
 	@Override
 	public void start(Map<String, String> props) {
-		kafkaTopic = props.get("kafka.topic");
+		kafkaTopic = props.get("topic");
 		Configuration config = new Configuration.Builder()
 				.setAutoNickChange(false) //Twitch doesn't support multiple users
 				.setOnJoinWhoEnabled(false) //Twitch doesn't support WHO command
