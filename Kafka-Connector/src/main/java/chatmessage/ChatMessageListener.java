@@ -1,4 +1,5 @@
 package chatmessage;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -10,7 +11,7 @@ public class ChatMessageListener extends ListenerAdapter  {
 	public void onGenericMessage(GenericMessageEvent event) throws Exception {
 		super.onGenericMessage(event);
 		
-		MessageQueue.getInstance().put(parseToJSONString(event));
+		MessageQueue.getInstance().put(StringEscapeUtils.unescapeJava(parseToJSONString(event)));
 	}
 	
 	private String parseToJSONString(GenericMessageEvent event) {
@@ -19,7 +20,7 @@ public class ChatMessageListener extends ListenerAdapter  {
 				 event.getUser().getIdent().toString(),
 				 event.getUser().getNick().toString(),
 				 event.getUser().getUserId().toString(),
-				 event.getMessage().toString(),
+				 event.getMessage(),
 				 event.getTimestamp()));
 		  
 		 return json;
@@ -28,14 +29,14 @@ public class ChatMessageListener extends ListenerAdapter  {
 
 class UserMessage{
 	public String ident;
-	public String nick;
+	public String nickname;
 	public String userId;
 	public String message;
 	public Long timestamp;
 	
 	public UserMessage(String ident, String nick, String userId, String message, Long timestamp) {
 		this.ident = ident;
-		this.nick = nick;
+		this.nickname = nick;
 		this.userId = userId;
 		this.message = message;
 		this.timestamp = timestamp;
