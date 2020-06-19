@@ -1,0 +1,48 @@
+Risorse utili:
+- https://docs.confluent.io/current/connect/devguide.html
+- https://github.com/apache/kafka/tree/trunk/connect/file/src/main/java/org/apache/kafka/connect/file
+- https://docs.confluent.io/current/connect/userguide.html#connect-installing-plugins
+
+Seguendo l'implementazione dai link sopra specificata:
+
+Creazione risorsa (websocket, poll su API, BOT) per recuperare il flusso di dati.
+    Questa creazione è rimandata all'utente. 
+    
+    Nel caso specifico del recupero dei messaggi su twitch ho utilizzato PircBotX tramite protocollo IRC. Ho creato una classe Runnable e inizializzato e startato il bot. L'effettivo run del Thread verra fatto nel metodo Start del SourceConnector. Il Bot è inserito in un thread, inizialmente sono uscito pazzo in quanto il metodo taskConfig non veniva eseguito, di conseguenza non veniva generato il topic automaticamente dal connettore. 
+    In questo modo i due processi sono differenzziati e comunicano tramite una coda. Documentare nella documentazione del progetto.
+    Ho inoltre implementato una coda Singleton che funge da zona di memoria per passare i messaggi dalla risorsa al connettore vero e proprio.
+
+Creazione kafka connector
+    Il connettore si compone di due principali classi: SourceConnector e SourceTask, esistono i corrispettivi Sink, ma non è ciò che ci interessa.
+    La classe SourceConnector inizializza tramite il metodo taskConfigs(int maxTasks) ogni singolo task (nel nostro caso 1 solo). Inoltre si occupa di inizializare tramite start(Map<String, String> props) la risorsa 
+    che si occuperà di prelevare i dati ed inserirli in coda (nel mio caso starta un thread in cui il bot è posto in run). Riceve inolte le proprietà dal file nome-mio-connettore.properties, si occuperà di farle presenti al task tramite il metodo taskConfigs(int maxTasks).
+    La classe SourceTask si occupa del vero e prorio inserimento nell'unica partizione del topic creata. Tramite il metodo poll() essa inizializza un List<SourceRecord> records e finché la coda non risulta vuota, aggiunge alla lista dei SourceRecord (vedi lo schema nelle classi del progetto), infine ritorna la lista creata, i cui elementi verranno inseriti nella partizione del topic indicato dal SourceRecord.
+    
+    Bisogna quindi settare due tipologie di properties:
+        nome-mio-connettore.properties: si occupa di inizializzare proprietà inerenti al singolo connettore e inoltre alla risorsa utilizzata per prelevare i dati (vedi esempio nella repo).
+        worker.properties: si occupa di definire proprietà generali dei connector (da capire bene)
+        
+Creazione Uber/Fat Jar
+    Per creare l'uber jar da inserire nella cartella Kafka-Settings, si avvia una bash nella cartella contenente il progetto maven, quindi il pom.xml. Usando maven da console si inserisce il comando:
+    mvn package
+    Questo comando creerà l'uber jar nella cartella target all'interno del progetto. Nota bene: bisogna usare il jar con le dimensioni maggiori, solitamente privo del nome 'original'.
+        
+Containerizzazione tramite docker
+    Il docker-compose.yml effettua la composizione dei container e della network creata (controllare che gli indirizzi ip siano correttamente settati).
+    Sono presenti due container principali:
+        zookeper: esso si occupa di orchestrare tutti gli elementi collecati a kafka, quali server, connectors, consumers e producers. Viene pullato e avviato automaticamente dal docker-compose.yml.
+        kafka-server: esso è il container in cui vengono avviati gli script relativi al server e al connettore standalone.
+        (opzionale) kafka-consumer: serve come test iniziale per controllare se effettivamente funziona tutto, poi il nostro consumatore sarà Spark.
+        
+    l'avvio del kafka-server avviene sempre tramite il docker-compose up. Esso si occuperà di andare a prelevare il Dockerfile e seguire le sue direttive. Alcune sono:
+        Settare la variabile di ambiente che imposta l'indirizzo ip e porta del server di zookeper;
+        copiare, nome-mio-connettore.properties, worker.properties, Uber/Fat Jar, kafka-starter.sh dentro il container;
+        impostare l'entrypoint sullo script kafka-starter.sh
+    una volta eseguito il container, viene eseguito kafka-starter.sh che si occupa di avviare il server broker che si connetterà a zookeper, di avviare lo script che farà partire il nostro connettore.
+    
+Se tutto è stato eseguito correttamente è possibile testare il connettore tramite il kafka console consumer.
+Nella cartella Kafka-test-consumer, effettuare:
+    docker build . --tag nomeimage
+    docker run -it -network miaNetwork --ip mioIpV4 -p 9092 nomeimage
+Il dockerfile si occupa di copiare lo script kafka-starter.sh e di avviare un consumatore collegandolo al nostro bootstrap.server (cambiare ip secondo la propria configurazione).
+Se tutto è andato bene, dovremmo vedere i nostri messaggi consumati venire mostrati direttamente in bash.
