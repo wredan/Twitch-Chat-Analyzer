@@ -2,3 +2,4 @@
 **/target/
 chat-channel.properties
 Main.java
+*.tgz
