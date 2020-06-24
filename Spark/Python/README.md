@@ -4,42 +4,63 @@ Risorse utili:
 - [Maven Spark streaming](https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka-0-8-assembly_2.11)
 - [Vader](https://github.com/cjhutto/vaderSentiment)
 
+## Creazione Spark Consumer
+Il consumer è composto da uno script python che utilizza moduli quali PySpark-2.4.6, Vader Sentiment Analysis e altri moduli di supporto. 
+
+### PySpark
+Viene utilizzato il modulo PySpark che permette di instaurare una connessione ad un Kafka topic per la lettura del contenuto di una partizione.
+Esistono due modalità principali:
+- Creazione di uno Stream;
+- Creazione di un Direct Stream.
+
+La sostanziale differenza tra i due è che il primo permette una connessione tramite Zookeeper o qualsiasi altro servizio di orchestrazione che si occuperà di esplorare i topics e restituire il lo streaming del topic richiesto. La seconda modalità effettua una richiesta direttamente ad un Kafka-Server che si occuperà di fornire lo streaming del topic.
+
+la modalità utilizzata in questa repo è la creazione di uno Stream tramite Zookeper.
+
+### Struttura del codice
+#### SparkContext: 
+```py
+sc = SparkContext(appName="Twitch")
+sc.setLogLevel("WARN")
+```
+si occupa di impostare un contesto relativamente ad opzioni e settings che verranno usati per generare uno StreamingContext;
+
+#### StreamingContext: 
+```py
+ssc = StreamingContext(sc, TimeInSeconds)
+```
+è il contesto che verrà utilizzato per impostare una connessione, diretta o meno. Il secondo parametro si riferisce al timing in sec in cui lo script effettua un controllo e consuma tutti i messaggi dal last offset fino all'attuale offset della partizione.
+
+#### KafkaUtils: 
+```py
+brokers="10.0.100.22:2181"
+topic = "twitch"
+kvs = KafkaUtils.createStream(ssc, brokers, "spark-streaming-consumer", {topic: 1})
+```
+è responsabile della creazione dello streaming vera e propria. Richiede uno StreamingContext, il nome dello Spark Consumer, un insieme di topic da cui consumare e infine, a seconda della modalita, un insieme di Zookeper Servers o un insieme di Kafka Servers verso cui effettuare una connessione.
+
+#### Avvio Stream
+utilizzando i metodi:
+```py
+ssc.start()
+ssc.awaitTermination()
+```
+ci si pone in ascolto nel topic indicato e verranno consumati i messaggi inseriti, vengono restituiti sotto forma di RDD.
+
+#### Consumo messaggi
+```py
+kvs.foreachRDD(get_messages)
+```
+
+### Sentiment Analysis con Vader
+
+
+### Containerizzazione ed esecuzione
+
 ```sh
+$ docker build --tag spark:consumer .
 $ docker run -it --network tap-project_twitch --ip 10.0.100.42 -p 9092 --name twitch-spark spark:consumer 
 ```
 
-
-### Creazione Spark Consumer
-Il consumer: 
-- SourceConnector
-- SourceTask
-
-La classe **SourceConnector** inizializza tramite il metodo **taskConfigs(int maxTasks)** ogni singolo task (nel nostro caso 1 solo). Inoltre si occupa di inizializare tramite **start(Map<String, String> props)** la risorsa che si occuperà di prelevare i dati ed inserirli in coda. Riceve inolte le proprietà dal file nome-mio-connettore.properties, si occuperà di farle presenti al task tramite il metodo **taskConfigs(int maxTasks)**.
-
-La classe **SourceTask** si occupa del vero e prorio inserimento nell'unica partizione del topic creata. Tramite il metodo **poll()** essa inizializza un **List\<SourceRecord\> records** e finché la coda non risulta vuota, aggiunge alla lista dei SourceRecord (vedi lo schema nelle classi del progetto), infine ritorna la lista creata, i cui elementi verranno inseriti nella partizione del topic indicato dal SourceRecord.
-
-Bisogna quindi settare due tipologie di properties:
-- **nome-mio-connettore.properties**: si occupa di inizializzare proprietà inerenti al singolo connettore e inoltre alla risorsa utilizzata per prelevare i dati (vedi esempio nella repo).
-- **worker.properties**: si occupa di definire proprietà generali dei connector.        
-        
-### Containerizzazione tramite docker
-Il docker-compose.yml contiene la composizione dei container e della network da creare (controllare che gli indirizzi ip siano correttamente settati).
-
-Sono presenti due container principali:
-- **zookeper**: esso si occupa di orchestrare tutti gli elementi collegati a kafka, quali server, connectors, consumers e producers. Viene pullato e avviato automaticamente dal **docker-compose up**.
-- **kafka-server**: esso è il container in cui vengono avviati gli script relativi al server e al connettore standalone.
-- **kafka-consumer**(opzionale): serve come test iniziale per controllare se effettivamente funziona tutto, poi il consumatore sarà Spark.
-
-L'avvio di zookeper e del kafka-server avviene sempre tramite il comando:
-```sh
-$ docker-compose up
-```
-Esso si occuperà di andare a prelevare il docker-compose.yml e seguire le sue direttive. 
-Nello specifico, alcune direttive del Dockerfile del kafka-server sono:
-- Settare la variabile di ambiente che imposta l'indirizzo ip e porta del server di zookeper;
-- Copiare, nome-mio-connettore.properties, worker.properties, Uber/Fat Jar, kafka-starter.sh dentro il container;
-- Impostare l'entrypoint sullo script kafka-starter.sh.
-
-Una volta eseguito il container, viene eseguito **kafka-starter.sh** che si occupa di avviare il server broker che si connetterà a zookeper, di avviare lo script che farà partire il connettore.
 
 
