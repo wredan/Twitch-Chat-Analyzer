@@ -1,20 +1,4 @@
 version: '3.7'
-services: 
-  zookeeper:
-    image: zookeeper
-    restart: always
-    ports: 
-      - 2181:2181
-    container_name: "twitch-zookeeper"
-    networks: 
-      twitch:
-        ipv4_address: "10.0.100.22"
-  kafka:
-    build: Kafka-Settings/
-    networks: 
-      twitch:
-        ipv4_address: "10.0.100.25"
-    container_name: "twitch-kafka"
 
 networks: 
   twitch:
@@ -22,4 +6,27 @@ networks:
       driver: default
       config: 
         - subnet: 10.0.100.0/24
+        
+services: 
+  zookeeper:
+    image: zookeeper
+    restart: always
+    ports: 
+      - 2181:2181
+    networks: 
+      twitch:
+        ipv4_address: "10.0.100.22"
+    container_name: "twitch-zookeeper"
+  kafka:
+    build: Kafka/
+    networks: 
+      twitch:
+        ipv4_address: "10.0.100.25"
+    container_name: "twitch-kafka"
+  # spark:
+  #   build: Spark/Spark-Settings/
+  #   networks: 
+  #     twitch:
+  #       ipv4_address: "10.0.100.42"
+  #   container_name: "twitch-spark"
     
