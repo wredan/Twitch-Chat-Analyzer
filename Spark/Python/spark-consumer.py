@@ -91,9 +91,9 @@ sc = SparkContext(appName="Twitch")
 sc.setLogLevel("WARN")
 ssc = StreamingContext(sc, 10)
 
-kvs = KafkaUtils.createStream(ssc, brokers, "spark-streaming-consumer", {topic: 1})
+stream = KafkaUtils.createStream(ssc, brokers, "spark-streaming-consumer", {topic: 1})
 
-kvs.foreachRDD(get_messages)
+stream.foreachRDD(get_messages)
 
 ssc.start()
 ssc.awaitTermination()
