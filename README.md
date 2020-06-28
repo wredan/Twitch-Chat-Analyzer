@@ -12,9 +12,8 @@ Live Twitch chats, especially if there are a lot of spectators, are really diffi
 
 This tool aims to help moderators and streamers keeping track of the interactions between the streamer and its audience, making use of Sentiment Analysis.
 
-### Technologies
+### Data Pipeline Technologies
 
-- **Containerization**: [Docker]( https://www.docker.com "Docker")
 - **Ingestion**: [Kafka Connect](https://docs.confluent.io/current/connect/index.html "Kafka Connect") with custom connector and [PircBotX](https://github.com/pircbotx/pircbotx "PircBotX")
 - **Streaming**: [Apache Kafka](https://www.confluent.io/what-is-apache-kafka "Apache Kafka")
 - **Processing**: [Spark Streaming](https://spark.apache.org/streaming/ "Spark Streaming"), [Spark SQL](https://spark.apache.org/sql/ "Spark SQL"), [PySpark(2.4.6)](https://spark.apache.org/docs/2.4.6/library "PySpark(2.4.6)")
@@ -23,15 +22,17 @@ This tool aims to help moderators and streamers keeping track of the interaction
 - **Indexing**: [ElasticSearch](https://www.elastic.co/what-is/elasticsearch "ElasticSearch")  
 - **Visualization**: [Kibana](https://www.elastic.co/what-is/kibana "Kibana") 
 
+**Containerization**: [Docker]( https://www.docker.com "Docker")
+
 ### Project structure
 <p align="center"><img src="docs/img/twitch_chat _analyzer_workflow.svg" alt="workflow" width="800"/></p>
 
 The project workflow follows the structure above.
 #### Shortly
-The bot created by the PircBotX interface receives the messages sent in a chat selected by the user through the IRC protocol ([Internet Relay Chat](https://en.wikipedia.org/wiki/Internet_Relay_Chat "IRC")). A JSON is built with data and metadata provided by the bot. It is inserted into a Message Queue, from which the connector structure picks them up and inserts them into the Kafka-topic: twitch. From there they are taken via a python script from the Spark Steaming interface. Spark SQL reconstructs the JSON, it consumes the message, making a Dataframe available. Spark SQL also communicates with the Vader Sentiment Analysis library which provides a result on the analysis of the message. "sentiment" field is added with the result obtained by Vader's elaboration, reported among one of the following classes: very_positive, positive_opinion, neutral_opinion, negative_opinion, very_negative, ironic. The newly built RDD is indexed through the product of the elastic family, Elasticsearch. Kibana (another elastic tool) deals with aggregating and placing metrics making data available through a user interface.
+The bot created by the PircBotX interface receives the messages sent in a chat selected by the user through the IRC protocol ([Internet Relay Chat](https://en.wikipedia.org/wiki/Internet_Relay_Chat "IRC")). A JSON is built with data and metadata provided by the bot. It is inserted into a Message Queue from which the connector structure picks them up and inserts them into the Kafka-topic: twitch. From there they are taken via a python script from the Spark Steaming interface. Spark SQL reconstructs the JSON, it consumes the message, making a Dataframe available. Spark SQL also communicates with the Vader Sentiment Analysis library which provides a result on the analysis of the message. "sentiment" field is added with the result obtained by Vader's elaboration, reported among one of the following classes: very_positive, positive_opinion, neutral_opinion, negative_opinion, very_negative, ironic. The newly built RDD is indexed through the product of the elastic family, Elasticsearch. Kibana (another elastic tool) deals with aggregating and placing metrics making data available through a user interface.
 
 ### Technical insights
-There is a doc file similar to this in each folder inherent to a specific component
+There is doc file similar to this in each folder to get information for each specific component.
 
 ### Boot up process
 In the /bin folder there are shell scripts that allow you to start the following project.
@@ -40,7 +41,7 @@ In the /bin folder there are shell scripts that allow you to start the following
 
 **N.B.** when files are downloaded to Linux machines, many versions remove execution permission for security reason, to add it to all sh files in this project folder, run:
 
-```sh
+```shell
 $ cd path_to_cloned_repo
 $ find ./ -type f -iname "*.sh" -exec chmod +x {} \;
 ```
@@ -49,11 +50,11 @@ In the [Kafka/Kafka-Settings](https://github.com/Warcreed/Tap-Project/tree/maste
 #### All in one solution
 
 In the bin folder, start the following script:
-```sh
+```shell
 $ bin/docker-compose.sh
 ```
 It starts components such as Zookeeper, Kafka, Elastisearch, and Kibana. When all the components are started, run the following command and follow the instructions on the screen:
-```sh
+```shell
 $ bin/spark-consumer-start.sh
 ```
 When Spark starts, follow the instructions on the screen and choose **Python**.
@@ -61,7 +62,7 @@ When Spark starts, follow the instructions on the screen and choose **Python**.
 #### Long solution, start the machines individually
 
 In the bin folder, start **in order** the following scripts, in **different bash**:
-```sh
+```shell
 $ bin/create-network.sh
 ~~~ Wait until end logging ~~~
 
@@ -82,6 +83,8 @@ $ bin/spark-consumer-start.sh
 ```
 It will start individual components such as Zookeeper, Kafka, Elastisearch, Kibana.
 When Spark starts, follow the instructions on the screen and choose **Python**.
+
+To stop all running container, just ctrl + C in their own shell.
 
 #### Almost done
 In the browser, enter the following address:  http://10.0.100.52:5601 .

@@ -7,13 +7,19 @@ In this project, Elasticsearch plays the role of indexing data from Spark after 
 
 ### Setup
 
-Zookeeper carries out its setup automatically for this project.
+Elasticsearch carries out its setup automatically for this project.
+
+### Boot up process
+
+You can get data directly from your browser because Elasticsearch use REST API.
 
 ### Technical insights
-- image: zookeeper
-- container_name: "twitch-zookeeper"
-- ipv4_address: "10.0.100.22"
-- ports: 2181:2181
-- network: folderName_twitch       
+- image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+- container_name: "twitch-elasticsearch"
+- ipv4_address: "10.0.100.51"
+- ports: 9200:9200
+- network: twitch-chat-analyzer_twitch        
 
-http://10.0.100.51:9200/_cat/indices?v
+### Useful query
+
+- http://10.0.100.51:9200/_cat/indices?v
