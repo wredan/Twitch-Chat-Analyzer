@@ -2,4 +2,9 @@
 **/target/
 chat-channel.properties
 Main.java
+test.py
 *.tgz
+*.cache-main
+*.cache-tests
+*.zip
+*.jar

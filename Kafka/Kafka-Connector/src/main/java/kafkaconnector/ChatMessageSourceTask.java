@@ -38,7 +38,7 @@ public class ChatMessageSourceTask extends SourceTask {
 	public List<SourceRecord> poll() throws InterruptedException {
 		List<SourceRecord> records = new ArrayList<SourceRecord>();
 		while (!queue.isEmpty()) {
-			String data = queue.take() + ", ";
+			String data = queue.take();
 			SourceRecord record = new SourceRecord(offsetKey(OFFSET_KEY), offsetValue(count++), kafkaTopic,
 					Schema.STRING_SCHEMA, data);
 			records.add(record);

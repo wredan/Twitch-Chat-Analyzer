@@ -1,0 +1,4 @@
+FROM docker.elastic.co/kibana/kibana:7.8.0
+ENV ELASTICSEARCH_URL "http://10.0.100.51:9200"
+ENV ELASTICSEARCH_HOSTS "http://10.0.100.51:9200"
+ENV MONITORING_ENABLED "false"

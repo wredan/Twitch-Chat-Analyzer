@@ -10,23 +10,50 @@ networks:
 services: 
   zookeeper:
     image: zookeeper
-    restart: always
+    container_name: "twitch-zookeeper"
     ports: 
       - 2181:2181
     networks: 
       twitch:
         ipv4_address: "10.0.100.22"
-    container_name: "twitch-zookeeper"
   kafka:
     build: Kafka/
+    container_name: "twitch-kafka"
     networks: 
       twitch:
-        ipv4_address: "10.0.100.25"
-    container_name: "twitch-kafka"
+        ipv4_address: "10.0.100.25"    
+  elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+      container_name: "twitch-elasticsearch"
+      ports:
+        - 9200:9200
+      environment:
+        discovery.type: single-node
+      networks: 
+        twitch:
+          ipv4_address: "10.0.100.51"
+  kibana:
+      image: docker.elastic.co/kibana/kibana:7.8.0
+      container_name: "twitch-kibana"
+      ports:
+        - 5601:5601
+      environment:
+        ELASTICSEARCH_URL: http://10.0.100.51:9200
+        ELASTICSEARCH_HOSTS: http://10.0.100.51:9200
+        MONITORING_ENABLED: "false"
+      networks: 
+        twitch:
+          ipv4_address: "10.0.100.52"
   # spark:
-  #   build: Spark/Spark-Settings/
+  #   build: Spark/Python/
+  #   container_name: "twitch-spark
   #   networks: 
   #     twitch:
   #       ipv4_address: "10.0.100.42"
-  #   container_name: "twitch-spark"
+  # spark:
+  #   build: Spark/Scala/
+  #   container_name: "twitch-spark
+  #   networks: 
+  #     twitch:
+  #       ipv4_address: "10.0.100.42"
     

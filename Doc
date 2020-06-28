@@ -46,3 +46,8 @@ Nella cartella Kafka-test-consumer, effettuare:
     docker run -it -network miaNetwork --ip mioIpV4 -p 9092 nomeimage
 Il dockerfile si occupa di copiare lo script kafka-starter.sh e di avviare un consumatore collegandolo al nostro bootstrap.server (cambiare ip secondo la propria configurazione).
 Se tutto è andato bene, dovremmo vedere i nostri messaggi consumati venire mostrati direttamente in bash.
+
+
+PERCHE' ABBIAMO USATO FLUME?? Ovviamente a scopo didattico, inoltre perché eravamo certi di dover usare kafka, poi vedi sotto.
+Unlike Flume, Connect is only focused on getting data in/out of Kafka, 
+so if your trying to get Source data into some other messaging system (like RabbitMQ or a JMS broker) then Connect is not the right tool.

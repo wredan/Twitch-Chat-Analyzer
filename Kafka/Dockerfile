@@ -21,11 +21,13 @@ COPY ${TWITCH_SETTINGS}/chat-channel.properties ${KAFKA_DIR}/conf/
 COPY ${TWITCH_SETTINGS}/worker.properties ${KAFKA_DIR}/conf/
 
 # mvn package
-COPY ${TWITCH_CONNECTOR}/ ${TWITCH_CONNECT_DIR}/
-WORKDIR ${TWITCH_CONNECT_DIR}/
-RUN mvn package
-RUN mkdir -p ${KAFKA_PLUGINS_DIR}
-RUN cp target/twitch-kafka-connector-* ${KAFKA_PLUGINS_DIR}
+# COPY ${TWITCH_CONNECTOR}/ ${TWITCH_CONNECT_DIR}/
+# WORKDIR ${TWITCH_CONNECT_DIR}/
+# RUN mvn package
+# RUN mkdir -p ${KAFKA_PLUGINS_DIR}
+# RUN cp target/twitch-kafka-connector-* ${KAFKA_PLUGINS_DIR}
+
+COPY ${TWITCH_SETTINGS}/twitch-kafka-connector-0.0.1-SNAPSHOT.jar ${KAFKA_PLUGINS_DIR}
 
 COPY ${TWITCH_SETTINGS}/kafka-starter.sh ${KAFKA_DIR}
 

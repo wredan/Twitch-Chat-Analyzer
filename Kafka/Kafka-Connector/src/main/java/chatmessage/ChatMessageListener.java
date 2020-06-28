@@ -1,9 +1,8 @@
 package chatmessage;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.json.JSONObject;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-
-import com.google.gson.Gson;
 
 public class ChatMessageListener extends ListenerAdapter  {
 	
@@ -27,33 +26,13 @@ public class ChatMessageListener extends ListenerAdapter  {
 	}
 	
 	private String parseToJSONString(GenericMessageEvent event) {
-		 Gson gson = new Gson();
-		 String json = gson.toJson(new UserMessage(
-				 targetChannelUsername,
-				 event.getUser().getIdent().toString(),
-				 event.getUser().getNick().toString(),
-				 event.getUser().getUserId().toString(),
-				 event.getMessage(),
-				 event.getTimestamp()));
+		JSONObject json = new JSONObject();
+		json.put("targetChannelUsername", targetChannelUsername)
+				.put("nickname", event.getUser().getNick())
+				.put("userId", event.getUser().getUserId().toString())
+				.put("message", event.getMessage().replace("\"", "'"))
+				.put("timestamp", event.getTimestamp());
 		  
-		 return json;
-	}
-}
-
-class UserMessage{
-	public String targetChannelUsername;
-	public String ident;
-	public String nickname;
-	public String userId;
-	public String message;
-	public Long timestamp;
-	
-	public UserMessage(String targetChannelUsername, String ident, String nick, String userId, String message, Long timestamp) {
-		this.targetChannelUsername = targetChannelUsername;
-		this.ident = ident;
-		this.nickname = nick;
-		this.userId = userId;
-		this.message = message;
-		this.timestamp = timestamp;
+		 return json.toString();
 	}	
 }

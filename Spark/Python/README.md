@@ -62,5 +62,9 @@ $ docker build --tag spark:consumer .
 $ docker run -it --network tap-project_twitch --ip 10.0.100.42 -p 9092 --name twitch-spark spark:consumer 
 ```
 
+https://www.bmc.com/blogs/write-apache-spark-elasticsearch-python/
+
+https://starsift.com/2018/01/18/integrating-pyspark-and-elasticsearch/
+
 
 
