@@ -34,17 +34,17 @@ The bot created by the PircBotX interface receives the messages sent in a chat s
 There is a doc file similar to this in each folder inherent to a specific component
 
 ### Boot up process
-In the / bin folder there are shell scripts that allow you to start the following project.
+In the /bin folder there are shell scripts that allow you to start the following project.
 
-**N.B.** This project uses Docker as a containerization tool Make sure you have it installed. Look online to understand how to install it in your system.
+**N.B.** This project uses Docker as a containerization tool. Make sure you have it installed. Look online to understand how to install it in your system.
 
-**N.B.** when files are downloaded to Linux machines, many versions tend to remove execution permission for security, to add to all sh files in this folder and subfolders, run:
+**N.B.** when files are downloaded to Linux machines, many versions remove execution permission for security reason, to add it to all sh files in this project folder, run:
 
 ```sh
 $ cd path_to_cloned_repo
 $ find ./ -type f -iname "*.sh" -exec chmod +x {} \;
 ```
-In the [Kafka/Kafka-Settings](https://github.com/Warcreed/Tap-Project/tree/master/Kafka/Kafka-Settings "Kafka-Settings") folder, rename **chat-channel.properties.dist** to **chat-channel.properties** and set all the parameters required by Twitch for the connection, instructions in the same file. Once set up, continue.
+In the [Kafka/Kafka-Settings](https://github.com/Warcreed/Tap-Project/tree/master/Kafka/Kafka-Settings "Kafka-Settings") folder, rename **chat-channel.properties.dist** to **chat-channel.properties** and set all parameters required by Twitch connection, instructions in the same file. Once set up, continue.
 
 #### All in one solution
 
