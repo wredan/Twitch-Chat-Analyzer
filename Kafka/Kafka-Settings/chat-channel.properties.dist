@@ -6,13 +6,13 @@ name=twitch_chat_message
 connector.class=kafkaconnector.ChatMessageSourceConnector
 #max tasks
 tasks.max=1
-#kafka topic name
+#kafka topic name, change if you know what are you doing
 topic=twitch
 #Your twitch.tv username
-channel.username=testaccount
+channel.username=username
 #Your oauth password from http://twitchapps.com/tmi
 oauth=oauth:YOUR_KEY
-#Target twitch channel, this property is used to get the chat message stream
+#Target twitch channel, this property is used to get the chat message stream, must be lower case, starting with #
 channel=#CHANNEL_NAME
 #Target twitch channel name
 target.channel.username=TARGET_CHANNEL_USERNAME
