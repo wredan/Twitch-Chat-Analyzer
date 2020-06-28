@@ -11,7 +11,7 @@ groupId = "spark-streaming-consumer"
 log_level = "ERROR"
 
 kafka_params = {
-    "auto.offset.reset": "latest",
+    "auto.offset.reset": "smallest",
     "enable.auto.commit": False
 }
 

@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 
-import sparkConsumerConfig as config
+from sparkConsumerConfig import twitch_emotes
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 # from sentita import calculate_polarity
 
 # Vader
 analysis = SentimentIntensityAnalyzer()
-analysis.lexicon.update(config.twitch_emotes)
+analysis.lexicon.update(twitch_emotes)
 
 def get_sentiment_analysis_en(phrase):  
     polarity = analysis.polarity_scores(phrase)         

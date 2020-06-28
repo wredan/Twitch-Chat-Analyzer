@@ -36,9 +36,7 @@ COPY elasticsearch-hadoop-7.8.0.jar ${SPARK_DIR}/
 # RUN python3 -m spacy download it
 # RUN pip3 install tensorflow=2.2
 
-COPY sparkConsumer.py  ${SPARK_DIR}/code/
-COPY sparkConsumerConfig.py  ${SPARK_DIR}/code/
-COPY sentimentAnalysis.py  ${SPARK_DIR}/code/
+COPY code/  ${SPARK_DIR}/code/
 
 # Add Spark Starter
 COPY spark-starter.sh $SPARK_DIR/bin/
