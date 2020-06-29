@@ -6,6 +6,7 @@ import org.apache.spark.streaming.kafka010._
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark._
+import org.apache.spark.sql.Row
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.sql.SparkSession
@@ -56,11 +57,16 @@ object App {
   
   def readValues(rdd: RDD[String]): Unit = {
 		val dataset = this.spark.read.json(rdd);
-		dataset.show()
-		val sentimentAnalyzer = new SentimentAnalyzer("This is a test string, this tool is very useful");
+		if (!dataset.isEmpty) {
+		  dataset.show()
+		  dataset.rdd.collect().foreach(f => getPrediction(f.getString(0)))
+		}    
+	} 
+  
+  def getPrediction(message: String ): Unit = {
+    val sentimentAnalyzer = new SentimentAnalyzer(message);
     sentimentAnalyzer.analyze();
     val polarity = sentimentAnalyzer.getPolarity;
-    println(polarity)
-    
-	} 
+    println(polarity + " | " + message)
+  }
 }
