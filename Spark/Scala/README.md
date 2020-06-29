@@ -1,5 +1,7 @@
-# Recuperare tgz di Spark
-Bisogna recuperare ed inserire in questa cartella il file tgz di [Spark](https://downloads.apache.org/spark/spark-3.0.0/spark-3.0.0-bin-hadoop2.7.tgz)
+# Getting Spark tgz
+**N.B.** You need to download and insert the tgz file in the Scala folder, you can download it from [here](https://downloads.apache.org/kafka/2.5.0/kafka_2.12-2.5.0.tgz).
 
+## Spark Scala version
+This version is currently work in progress, update soon.
 
 

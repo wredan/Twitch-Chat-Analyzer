@@ -111,7 +111,7 @@ The connector consists of two main classes that extend the following:
 
 Only one SourceTask is set up in this project. However, they can be a lot.
 
-### SourceConnector Override
+### SourceConnector
 
 The **SourceConnector** class takes care of initializing properties class attribute from the file `chat-message.properties`:
 
@@ -142,7 +142,7 @@ public List<Map<String, String>> taskConfigs(int maxTasks) {
 }
 ```
 
-### SourceTask Override
+### SourceTask
 The **SourceTask** class takes care of setting data topic partition created.
 The start method initializes the properties of the task, originating from the SourceConnector.
 
