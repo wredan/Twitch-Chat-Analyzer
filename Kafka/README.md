@@ -81,8 +81,7 @@ public class ChatMessageListener extends ListenerAdapter  {
 		JSONObject json = new JSONObject();
 		json.put("targetChannelUsername", targetChannelUsername)
 				.put("nickname", event.getUser().getNick())
-				.put("userId", event.getUser().getUserId().toString())
-				.put("message", event.getMessage().replace("\"", "'"))
+				.put("message", new String(event.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8).replace("\"", "'").replace("\\", ""))
 				.put("timestamp", event.getTimestamp());
 		  
 		 return json.toString();

@@ -8,7 +8,7 @@ The main goal of this project is to provide a useful tool for keeping track of e
 Source: [Wikipedia](https://en.wikipedia.org/wiki/Sentiment_analysis "Sentiment analysis")
 
 ### Problem description
-Live Twitch chats, especially if there are a lot of spectators, are really difficult to follow and moderate. Moderators are people that helps the Streamer relies to prevent their chat from becoming a jungle of frustrated monkeys.
+Live Twitch chats, especially if there are a lot of spectators, are really difficult to follow and moderate. Moderators are people that help the Streamer relies to prevent their chat from becoming a jungle of frustrated monkeys.
 
 This tool aims to help moderators and streamers keeping track of the interactions between the streamer and its audience, making use of Sentiment Analysis.
 
@@ -74,22 +74,22 @@ When Spark starts, follow the instructions on the screen and choose **Python**.
 In the bin folder, start **in order** the following scripts, in **different bash**:
 ```shell
 $ bin/create-network.sh
-~~~ Wait until end logging ~~~
+"~~~ Wait until end logging ~~~"
 
 $ bin/zookeeper-start.sh
-~~~ Wait until end logging ~~~
+"~~~ Wait until end logging ~~~"
 
 $ bin/kafka-start.sh
-~~~ Wait until end logging ~~~
+"~~~ Wait until end logging ~~~"
 
 $ bin/elasticsearch-start.sh
-~~~ Wait until end logging ~~~
+"~~~ Wait until end logging ~~~"
 
 $ bin/kibana-start.sh
-~~~ Wait until end logging ~~~
+"~~~ Wait until end logging ~~~"
 
 $ bin/spark-consumer-start.sh
-~~~ Wait until end logging ~~~
+"~~~ Wait until end logging ~~~"
 ```
 It will start individual components such as Zookeeper, Kafka, Elastisearch, Kibana.
 When Spark starts, follow the instructions on the screen and choose **Python**.

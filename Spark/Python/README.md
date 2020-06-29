@@ -51,7 +51,6 @@ def get_item_structure(item):
         result = sentiment.get_sentiment_analysis_en(item['message'])
     return {
             'targetChannelUsername': item['targetChannelUsername'],
-            'userId': item['userId'],
             'nickname': item['nickname'],
             'message': item['message'],
             'sentiment': result,
