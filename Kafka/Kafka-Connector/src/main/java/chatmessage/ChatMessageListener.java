@@ -1,4 +1,6 @@
 package chatmessage;
+import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONObject;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -29,8 +31,7 @@ public class ChatMessageListener extends ListenerAdapter  {
 		JSONObject json = new JSONObject();
 		json.put("targetChannelUsername", targetChannelUsername)
 				.put("nickname", event.getUser().getNick())
-				.put("userId", event.getUser().getUserId().toString())
-				.put("message", event.getMessage().replace("\"", "'"))
+				.put("message", new String(event.getMessage().replace("\"", "'").replace("\\", "").getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8))
 				.put("timestamp", event.getTimestamp());
 		  
 		 return json.toString();

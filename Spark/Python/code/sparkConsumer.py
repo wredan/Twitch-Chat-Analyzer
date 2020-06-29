@@ -22,7 +22,6 @@ def get_item_structure(item):
     #     result = get_sentiment_analysis_ita(item['message'])
     return {
             'targetChannelUsername': item['targetChannelUsername'],
-            'userId': item['userId'],
             'nickname': item['nickname'],
             'message': item['message'],
             'sentiment': result,
