@@ -4,7 +4,7 @@
 twitch_streamer_nationality = "en"
 
 # Spark-Kafka Settings
-brokers="10.0.100.22:2181"
+bootstrap_server="10.0.100.22:2181"
 topic = "twitch"
 app_name = "Twitch-Spark"
 groupId = "spark-streaming-consumer"

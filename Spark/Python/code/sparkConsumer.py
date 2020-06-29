@@ -36,7 +36,7 @@ def get_messages(key,rdd):
             print("********************") 
             print(spark.createDataFrame(analyzed_rdd).show(20, False))  
             print("********************\n")
-        elastic_rdd = analyzed_rdd.map(lambda item: json.dumps(item)).map(lambda x: ('key', x))
+        elastic_rdd = analyzed_rdd.map(lambda item: json.dumps(item)).map(lambda x: ('', x)) #testare se questa ultima trasformazione è fondamentale
 
         elastic_rdd.saveAsNewAPIHadoopFile(
             path='-',
@@ -68,7 +68,7 @@ def main():
     spark = SparkSession.builder.appName(config.app_name).getOrCreate()
     spark.sparkContext.setLogLevel(config.log_level)
     ssc = StreamingContext(spark.sparkContext, 5)
-    stream = KafkaUtils.createStream(ssc, config.brokers, config.groupId, {config.topic: 1}, config.kafka_params)
+    stream = KafkaUtils.createStream(ssc, config.bootstrap_server, config.groupId, {config.topic: 1}, config.kafka_params)
 
     stream.foreachRDD(get_messages)
 
