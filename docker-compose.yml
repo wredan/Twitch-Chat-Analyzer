@@ -29,6 +29,8 @@ services:
         - 9200:9200
       environment:
         discovery.type: single-node
+      volumes:
+        - elasticsearch:/usr/share/elasticsearch/data/
       networks: 
         twitch:
           ipv4_address: "10.0.100.51"
@@ -56,4 +58,7 @@ services:
   #   networks: 
   #     twitch:
   #       ipv4_address: "10.0.100.42"
+
+volumes:
+  elasticsearch: 
     
