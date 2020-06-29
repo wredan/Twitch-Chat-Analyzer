@@ -14,7 +14,7 @@ twitch_emotes = {
     'coolstorybob': -1,
     'residentsleeper': -1,
     'kappa': 0.3,
-    'lul': -0.3,
+    'lul': -0.1,
     'pogchamp': 1.5,
     'heyguys': 1,
     'wutface': -1.5,
@@ -39,10 +39,8 @@ def get_sentiment_analyzer_en(phrase):
                 return 'ironic'
             else:
                 return 'positive_opinion'
-        elif polarity['pos'] - polarity["neg"] < 0.2 and polarity['pos'] > 0:
-            return 'positive_opinion'
         else:
-            return 'neutral_opinion'
+            return 'positive_opinion'
     elif polarity["compound"] <= -0.05:
         if polarity['neg'] - polarity["neu"] > 0.1:
             return 'very_negative'
@@ -51,10 +49,8 @@ def get_sentiment_analyzer_en(phrase):
                 return 'ironic'
             else:
                 return 'negative_opinion'
-        elif polarity['neu'] - polarity["neg"] < 0.2 and polarity['neg'] > 0:
-            return 'negative_opinion'
         else:
-            return 'neutral_opinion'
+            return 'negative_opinion'
     else:
         if polarity["pos"] > 0 and polarity["neg"] > 0:
             return "ironic"
