@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import os
 import pyspark
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
@@ -11,12 +12,12 @@ from elasticsearch import Elasticsearch
 
 import pandas as pd
 import json
-import sparkConsumerConfig as config
 import sentimentAnalysis as sentiment
+import sparkConsumerConfig as config
 
-def get_item_structure(item): 
+def get_item_structure(item):  
     if config.twitch_streamer_nationality == "en":   
-        result = sentiment.get_sentiment_analysis_en(item['message'])
+        result = sentiment.get_sentiment_analyzer_en(item['message'])
     # elif twitch_streamer_nationality == "it":
     #     result = get_sentiment_analysis_ita(item['message'])
     return {
@@ -30,7 +31,7 @@ def get_item_structure(item):
 
 def get_messages(key,rdd):   
     message_dataframe = spark.read.json(rdd.map(lambda value: json.loads(value[1])))      
-    if not message_dataframe.rdd.isEmpty():
+    if not message_dataframe.rdd.isEmpty():        
         analyzed_rdd = message_dataframe.rdd.map(lambda item: get_item_structure(item))
         if config.message_log:
             print("********************") 

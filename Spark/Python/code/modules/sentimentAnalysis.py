@@ -1,15 +1,36 @@
 # -*- coding: UTF-8 -*-
 
-from sparkConsumerConfig import twitch_emotes
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 # from sentita import calculate_polarity
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-# Vader
-analysis = SentimentIntensityAnalyzer()
-analysis.lexicon.update(twitch_emotes)
+# set your custom emote value to use for sentiment analyzer. Keep in mind to set a balanced values for each emote.
+twitch_emotes = {
+    '<3': 0.4,
+    '4head': 1,
+    'babyrage': -0.7,
+    'biblethump': -0.7,
+    'blessrng': 0.3,
+    'bloodtrail': 0.7,
+    'coolstorybob': -1,
+    'residentsleeper': -1,
+    'kappa': 0.3,
+    'lul': -0.3,
+    'pogchamp': 1.5,
+    'heyguys': 1,
+    'wutface': -1.5,
+    'kreygasm': 1,
+    'seemsgood': 0.7,
+    'kappapride': 0.7,
+    'feelsgoodman': 1,
+    'notlikethis': -1
+}
 
-def get_sentiment_analysis_en(phrase):  
-    polarity = analysis.polarity_scores(phrase)         
+#Vader
+analyzer = SentimentIntensityAnalyzer()
+analyzer.lexicon.update(twitch_emotes)
+
+def get_sentiment_analyzer_en(phrase): 
+    polarity = analyzer.polarity_scores(phrase)         
     if polarity["compound"] >= 0.05:
         if polarity['pos'] - polarity["neu"] > 0.1:
             return 'very_positive'
@@ -44,7 +65,7 @@ def get_sentiment_analysis_en(phrase):
         else:
             return 'neutral_opinion'
 
-# def get_sentiment_analysis_ita(phrase):   
+# def get_sentiment_analyzer_ita(phrase):   
 #     data = [phrase]
 #     results, polarities = calculate_polarity(data)   
 #     if abs(polarities[0] - polarities[1]) < 2:

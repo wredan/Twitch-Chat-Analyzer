@@ -4,6 +4,7 @@ ENV SPARK_VERSION "2.4.6"
 ENV SPARK_DIR "/opt/spark"
 ENV PATH $SPARK_DIR/bin:$PATH
 ENV PATH "/root/.local/bin:$PATH"
+ENV PATH "/opt/tap/code:$PATH"
 
 RUN apt-get update && apt-get -y install python3.7 python3-pip wget
 
@@ -36,7 +37,8 @@ COPY elasticsearch-hadoop-7.8.0.jar ${SPARK_DIR}/
 # RUN python3 -m spacy download it
 # RUN pip3 install tensorflow=2.2
 
-COPY code/  ${SPARK_DIR}/code/
+COPY code/*  /opt/tap/code/
+COPY modules.zip  /opt/tap/code/
 
 # Add Spark Starter
 COPY spark-starter.sh $SPARK_DIR/bin/
