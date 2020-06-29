@@ -1,15 +1,15 @@
-## Zookeeper
+# Zookeeper
 >ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services.
 
 Source: [Zookeeper](https://zookeeper.apache.org/ "Zookeeper")
 
 In this project, Zookeeper performs the centralized service function that maintains the configuration between Kafka, Kafka-connector and Spark.
 
-### Setup
+## Setup
 
 Zookeeper carries out its setup automatically for this project.
 
-### Boot up process
+## Boot up process
 
 You can run Zookeeper using this shell script in the main bin folder of this project.
 
@@ -39,7 +39,7 @@ root@d3d6a16cc926:/apache-zookeeper-3.6.1-bin# bin/zkCli.sh
 ```
 Just type help for a full command list. Enjoy
 
-### Technical insights
+## Technical insights
 - image: zookeeper
 - container_name: "twitch-zookeeper"
 - ipv4_address: "10.0.100.22"
