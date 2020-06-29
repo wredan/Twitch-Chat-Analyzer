@@ -1,5 +1,6 @@
 **/.settings/
 **/target/
+*/.ipynb_checkpoints/
 chat-channel.properties
 Main.java
 test.py
