@@ -2,7 +2,7 @@
 
 ## What is Spark
 
-Spark is a unified analysis engine for large data processing. It can analyze large volumes of data, using distributed systems. it is really fast.
+Spark is a unified analysis engine for large data processing. It can analyze large volumes of data, using distributed systems. It is really fast.
 
 ## Spark Streaming
 

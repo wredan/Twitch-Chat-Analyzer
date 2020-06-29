@@ -74,7 +74,7 @@ def get_messages(key,rdd):
 `get_sentiment_analysis_en()` function above return a sentiment class between: very_positive, positive_opinion, neutral_opinion, negative_opinion, very_negative, ironic.
 It still need some work to find the correct balance for each vader values.
 Basically vader get back 4 values:
-- compound is used to mainly get if the phrase is positive (> 0.05), neutral(-0.05 < x < 0.05) or negative (< -0.05).
+- compound is used to mainly get if the phrase is positive (> 0.05), neutral (-0.05 < x < 0.05) or negative (< -0.05).
 - pos, neg, neu are more specific values where you can perform your custom control (see code [here](https://github.com/Warcreed/Twitch-Chat-Analyzer/blob/master/Spark/Python/code/sentimentAnalysis.py) for more details).
 
 ## Setup

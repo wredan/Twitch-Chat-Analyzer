@@ -101,7 +101,7 @@ In the browser, enter the following address:  http://10.0.100.52:5601 .
 To set up Kibana, see its guide in the [Kibana folder](https://github.com/Warcreed/Tap-Project/tree/master/Kibana "Kibana").
 
 ### Volumes
-Docker volume is used to keep data when container is deleted or pruned. If you do not want to use is, just delete it from `docker-compose.yml`. If you are running long solution, delete -v parameter in the `bin/elasticsearch-start.sh` file. Then you can run `bin/drop-elasticsearch-volume.sh` to delete the volume permanently.
+Docker volume is used to keep data when container is deleted or pruned. If you do not want to use it, just delete it from `docker-compose.yml`. If you are running long solution, delete -v parameter in the `bin/elasticsearch-start.sh` file. Then you can run `bin/drop-elasticsearch-volume.sh` to delete the volume permanently.
 
 ## Developed by
 [Danilo Santitto](https://github.com/Warcreed "Warcreed")
