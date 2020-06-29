@@ -8,7 +8,7 @@ The main goal of this project is to provide a useful tool for keeping track of e
 Source: [Wikipedia](https://en.wikipedia.org/wiki/Sentiment_analysis "Sentiment analysis")
 
 ### Problem description
-Live Twitch chats, especially if there are a lot of spectators, are really difficult to follow and moderate. The roles of the 'Moderators' have been born for several years, people to whom the Streamer relies to prevent their chat from becoming a jungle of frustrated monkeys.
+Live Twitch chats, especially if there are a lot of spectators, are really difficult to follow and moderate. Moderators are people that helps the Streamer relies to prevent their chat from becoming a jungle of frustrated monkeys.
 
 This tool aims to help moderators and streamers keeping track of the interactions between the streamer and its audience, making use of Sentiment Analysis.
 
@@ -51,7 +51,11 @@ In the /bin folder there are shell scripts that allow you to start the following
 $ cd path_to_cloned_repo
 $ find ./ -type f -iname "*.sh" -exec chmod +x {} \;
 ```
+Fist time running:
 In the [Kafka/Kafka-Settings](https://github.com/Warcreed/Tap-Project/tree/master/Kafka/Kafka-Settings "Kafka-Settings") folder, rename **chat-channel.properties.dist** to **chat-channel.properties** and set all parameters required by Twitch connection, instructions in the same file. Once set up, continue.
+
+Other running:
+use `bin/set-observed-channel.sh CHANNELNAME` to change observed Twitch channel.
 
 ### All in one solution
 
@@ -95,6 +99,9 @@ To stop all running container, just ctrl + C in their own shell.
 ### Almost done
 In the browser, enter the following address:  http://10.0.100.52:5601 .
 To set up Kibana, see its guide in the [Kibana folder](https://github.com/Warcreed/Tap-Project/tree/master/Kibana "Kibana").
+
+### Volumes
+Docker volume is used to keep data when container is deleted or pruned. If you do not want to use is, just delete it from `docker-compose.yml`. If you are running long solution, delete -v parameter in the `bin/elasticsearch-start.sh` file. Then you can run `bin/drop-elasticsearch-volume.sh` to delete the volume permanently.
 
 ## Developed by
 [Danilo Santitto](https://github.com/Warcreed "Warcreed")
