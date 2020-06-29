@@ -35,22 +35,16 @@ def get_sentiment_analyzer_en(phrase):
         if polarity['pos'] - polarity["neu"] > 0.1:
             return 'very_positive'
         elif 0 <= abs(polarity['pos'] - polarity["neu"]) <= 0.6:
-            if polarity['neg'] > 0.1:
+            if polarity['neg'] > 0.05:
                 return 'ironic'
-            else:
-                return 'positive_opinion'
-        else:
-            return 'positive_opinion'
+        return 'positive_opinion'
     elif polarity["compound"] <= -0.05:
         if polarity['neg'] - polarity["neu"] > 0.1:
             return 'very_negative'
         elif 0 <= abs(polarity['neg'] - polarity["neu"]) <= 0.6:
-            if polarity['pos'] > 0.1:
+            if polarity['pos'] > 0.05:
                 return 'ironic'
-            else:
-                return 'negative_opinion'
-        else:
-            return 'negative_opinion'
+        return 'negative_opinion'
     else:
         if polarity["pos"] > 0 and polarity["neg"] > 0:
             return "ironic"
@@ -58,8 +52,7 @@ def get_sentiment_analyzer_en(phrase):
             return "positive_opinion"
         elif polarity['neu'] - polarity["neg"] < 0.4:
             return 'negative_opinion'
-        else:
-            return 'neutral_opinion'
+        return 'neutral_opinion'
 
 # def get_sentiment_analyzer_ita(phrase):   
 #     data = [phrase]
