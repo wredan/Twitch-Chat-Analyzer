@@ -19,6 +19,8 @@ services:
   kafka:
     build: Kafka/
     container_name: "twitch-kafka"
+    depends_on:
+      - "zookeeper"
     networks: 
       twitch:
         ipv4_address: "10.0.100.25"    
