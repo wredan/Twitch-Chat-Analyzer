@@ -67,7 +67,7 @@ def main():
     global spark
     spark = SparkSession.builder.appName(config.app_name).getOrCreate()
     spark.sparkContext.setLogLevel(config.log_level)
-    ssc = StreamingContext(spark.sparkContext, 5)
+    ssc = StreamingContext(spark.sparkContext, config.window)
     stream = KafkaUtils.createStream(ssc, config.bootstrap_server, config.groupId, {config.topic: 1}, config.kafka_params)
 
     stream.foreachRDD(get_messages)

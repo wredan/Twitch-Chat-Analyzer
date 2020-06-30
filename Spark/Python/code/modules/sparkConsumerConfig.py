@@ -9,6 +9,7 @@ topic = "twitch"
 app_name = "Twitch-Spark"
 groupId = "spark-streaming-consumer"
 log_level = "ERROR"
+window = 5 # Sec
 
 kafka_params = {
     "auto.offset.reset": "smallest",
