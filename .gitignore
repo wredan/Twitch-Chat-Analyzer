@@ -11,3 +11,4 @@ test.py
 *.jar
 Doc.txt
 *.propertiesr
+!elasticsearch-hadoop-7.8.0.jar
