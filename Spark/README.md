@@ -29,6 +29,6 @@ VADER (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-ba
 
 Python solution can be found [here](https://github.com/Warcreed/Twitch-Chat-Analyzer/tree/master/Spark/Python)
 
-## Scala Solution (currently working)
+## Scala Solution
 
 Scala solution can be found [here](https://github.com/Warcreed/Twitch-Chat-Analyzer/tree/master/Spark/Scala)
