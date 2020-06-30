@@ -14,7 +14,7 @@ twitch_emotes = {
     'coolstorybob': -1,
     'residentsleeper': -1,
     'kappa': 0.3,
-    'lul': -0.1,
+    'lul': 0.1,
     'pogchamp': 1.5,
     'heyguys': 1,
     'wutface': -1.5,
