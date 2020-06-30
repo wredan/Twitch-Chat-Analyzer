@@ -15,7 +15,7 @@ kafka_params = {
     "auto.offset.reset": "smallest",
 }
 
-message_log = True
+message_log = False
 
 # ElasticSearch Settings
 elastic_host="10.0.100.51"
