@@ -1,12 +1,5 @@
 version: '3.7'
-
-networks: 
-  twitch:
-    ipam: 
-      driver: default
-      config: 
-        - subnet: 10.0.100.0/24
-        
+      
 services: 
   zookeeper:
     image: zookeeper
@@ -48,18 +41,21 @@ services:
       networks: 
         twitch:
           ipv4_address: "10.0.100.52"
-  # spark:
-  #   build: Spark/Python/
-  #   container_name: "twitch-spark
-  #   networks: 
-  #     twitch:
-  #       ipv4_address: "10.0.100.42"
-  # spark:
-  #   build: Spark/Scala/
-  #   container_name: "twitch-spark
-  #   networks: 
-  #     twitch:
-  #       ipv4_address: "10.0.100.42"
+  spark:
+      build: Spark/Python/
+      container_name: "twitch-spark"
+      depends_on:
+        - "kafka"
+      networks: 
+        twitch:
+          ipv4_address: "10.0.100.42"
+
+networks: 
+  twitch:
+    ipam: 
+      driver: default
+      config: 
+        - subnet: 10.0.100.0/24
 
 volumes:
   elasticsearch: 
