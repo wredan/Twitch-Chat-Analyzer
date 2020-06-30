@@ -13,7 +13,6 @@ window = 5 # Sec
 
 kafka_params = {
     "auto.offset.reset": "smallest",
-    "enable.auto.commit": False
 }
 
 message_log = True
