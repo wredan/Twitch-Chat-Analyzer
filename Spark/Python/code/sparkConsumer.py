@@ -36,7 +36,7 @@ def get_messages(key,rdd):
             print("********************") 
             print(spark.createDataFrame(analyzed_rdd).show(20, False))  
             print("********************\n")
-        elastic_rdd = analyzed_rdd.map(lambda item: json.dumps(item)).map(lambda x: ('', x)) #testare se questa ultima trasformazione è fondamentale
+        elastic_rdd = analyzed_rdd.map(lambda item: json.dumps(item)).map(lambda x: ('', x))
 
         elastic_rdd.saveAsNewAPIHadoopFile(
             path='-',
