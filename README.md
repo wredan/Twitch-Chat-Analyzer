@@ -54,6 +54,10 @@ $ find ./ -type f -iname "*.sh" -exec chmod +x {} \;
 Fist time running:
 In the [Kafka/Kafka-Settings](https://github.com/Warcreed/Tap-Project/tree/master/Kafka/Kafka-Settings "Kafka-Settings") folder, rename **chat-channel.properties.dist** to **chat-channel.properties** and set all parameters required by Twitch connection, instructions in the same file. Once set up, continue.
 
+**N.B.** You need to download and insert the tgz file in the Kafka/Kafka-Settings folder, you can download it from [here](https://downloads.apache.org/kafka/2.5.0/kafka_2.12-2.5.0.tgz).
+
+**N.B.** You need to download and insert the tgz file in the Spark/Python folder, you can download it from [here](http://us.mirrors.quenda.co/apache/spark/spark-2.4.6/spark-2.4.6-bin-hadoop2.7.tgz).
+
 Other running:
 use `bin/set-observed-channel.sh CHANNELNAME` to change observed Twitch channel.
 
@@ -63,12 +67,6 @@ In the bin folder, start the following script:
 ```shell
 $ bin/docker-compose.sh
 ```
-It starts components such as Zookeeper, Kafka, Elastisearch, and Kibana. When all the components are started, run the following command and follow the instructions on the screen:
-```shell
-$ bin/spark-consumer-start.sh
-```
-When Spark starts, follow the instructions on the screen and choose **Python**.
-
 ### Long solution, start the machines individually
 
 In the bin folder, start **in order** the following scripts, in **different bash**:

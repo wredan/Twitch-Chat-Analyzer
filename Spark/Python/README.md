@@ -83,6 +83,8 @@ You can change setup in `sparkConsumerConfig.py` files.
 
 ## Boot up process
 
+**N.B.** You need to download and insert the tgz file in the Spark/Python folder, you can download it from [here](http://us.mirrors.quenda.co/apache/spark/spark-2.4.6/spark-2.4.6-bin-hadoop2.7.tgz).
+
 You can run Spark Python Consumer using this shell script in the main bin folder of this project, selecting Python option (1).
 
 ```sh
