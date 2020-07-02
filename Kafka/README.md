@@ -105,8 +105,8 @@ Check new version [here](https://mvnrepository.com/artifact/org.apache.kafka/con
 
 ### Structure
 The connector consists of two main classes that extend the following:
-- **SourceConnector**, main class that set and manage SourceTask properties;
-- **SourceTask**, actively get data from any source and put them into Kafka-topic. 
+- **SourceConnector**, main class that sets and manages SourceTask properties;
+- **SourceTask**, actively gets data from any source and put them into Kafka-topic. 
 
 Only one SourceTask is set up in this project. However, they can be a lot.
 
@@ -225,7 +225,7 @@ This project uses Kafka to stream messages from the Kafka-Connector. They will b
 
 To build and run this container, you need just to setup  **chat-message.properties**. Then use `bin/kafka-start.sh` script. it performs 3 main steps:
 
-- The Kafka-Connector folder contains the connector's maven project. The script run `mvn package` to create an Uber/Fat Jar;
+- The Kafka-Connector folder contains the connector's maven project. The script runs `mvn package` to create an Uber/Fat Jar;
 - Created Jar is copied into Kafka-Settings folder;
 - Connector image is built using docker. In this step `chat-channel.properties`, `worker.properties`, `kafka-starter.sh`, jar connector file, kafka.tgz are all copied into container image (you can see it [here](https://github.com/Warcreed/Twitch-Chat-Analyzer/blob/master/Kafka/Dockerfile))
 
