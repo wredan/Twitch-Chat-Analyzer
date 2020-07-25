@@ -2,8 +2,8 @@
 
 Python > 3.4 is required. Python 3.7 is used by this container.
 
-## Spark Consumer creation
-Il consumer è composto da uno script The consumer is made up of a python scripts that uses modules such as PySpark-2.4.6, Vader Sentiment Analysis and other support modules. che utilizza moduli quali PySpark-2.4.6, Vader Sentiment Analysis e altri moduli di supporto. 
+## Spark Consumer Creation
+Consumer is made up of a python scripts that uses modules such as PySpark-2.4.6, Vader Sentiment Analysis and other support modules.
 
 ### PySpark
 The PySpark module allows you to establish a connection to a Kafka topic for reading the content of a partition.
