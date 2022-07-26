@@ -102,4 +102,4 @@ To set up Kibana, see its guide in the [Kibana folder](https://github.com/Warcre
 Docker volume is used to keep data when container is deleted or pruned. If you do not want to use it, just delete it from `docker-compose.yml`. If you are running long solution, delete -v parameter in the `bin/elasticsearch-start.sh` file. Then you can run `bin/drop-elasticsearch-volume.sh` to delete the volume permanently.
 
 ## Developed by
-[Danilo Santitto](https://github.com/Warcreed "Warcreed")
+[Danilo Santitto](https://github.com/wredan "Wredan")
